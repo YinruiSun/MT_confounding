@@ -218,7 +218,7 @@ nodewise_lasso = function(X, nlambda = 100)
 
 # ---------- method: decorrelate & debias ----------
 
-test_stat_decorrelation = function(Y, X, initial = "trim", centralize = TRUE,
+test_stat_decorrelation = function(Y, X, initial = "decorrelation", centralize = TRUE,
                                    q = NULL, nlambda = 100, rho = 0.3, kmax = 20)
 {
     # Y: vector, length = p; or matrix, size = p * 1
