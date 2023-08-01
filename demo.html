@@ -11,9 +11,9 @@
 
 <meta name="author" content="Yinrui Sun" />
 
-<meta name="date" content="2023-07-31" />
+<meta name="date" content="2023-08-01" />
 
-<title>Demo Codes for Simulations</title>
+<title>Demo Codes</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1634,14 +1634,14 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">Demo Codes for Simulations</h1>
+<h1 class="title toc-ignore">Demo Codes</h1>
 <h4 class="author">Yinrui Sun</h4>
-<h4 class="date">2023-07-31</h4>
+<h4 class="date">2023-08-01</h4>
 
 </div>
 
 
-<p>Demo codes for simulations. The functions are provided in file
+<p>Demo codes through simulated data. The functions are provided in file
 <code>function.r</code>.</p>
 <pre class="r"><code>source(&#39;functions.r&#39;)</code></pre>
 <div id="data-generation" class="section level2">
@@ -1675,30 +1675,35 @@ and thus we suggest setting a larger value for the argument
 </ul>
 <pre class="r"><code>test_stat = list()
 
+# specify a larger q for decorrelating function
+sv = RSpectra::svds(A = scale(data$X, T, F), k =  20, nu = 0, nv = 0)$d
+q = which.max(sv[-20] / sv[-1])
+q = q + 5
+
 # decorrelate &amp; debias with trim transformation
 start = Sys.time()
-test_stat[[1]] = test_stat_decorrelation(Y = data$Y, X = data$X, initial = &#39;trim&#39;, centralize = F)$statistics
+test_stat[[1]] = test_stat_decorrelation(Y = data$Y, X = data$X, initial = &#39;trim&#39;, q = q)$statistics
 end = Sys.time()
 end - start</code></pre>
-<pre><code>## Time difference of 1.573939 mins</code></pre>
+<pre><code>## Time difference of 1.588138 mins</code></pre>
 <pre class="r"><code># decorrelate &amp; debias with decorrelation transformation
 start = Sys.time()
-test_stat[[2]] = test_stat_decorrelation(Y = data$Y, X = data$X, initial = &#39;decorrelation&#39;, centralize = F)$statistics
+test_stat[[2]] = test_stat_decorrelation(Y = data$Y, X = data$X, initial = &#39;decorrelation&#39;, q = q)$statistics
 end = Sys.time()
 end - start</code></pre>
-<pre><code>## Time difference of 1.463867 mins</code></pre>
+<pre><code>## Time difference of 1.538666 mins</code></pre>
 <pre class="r"><code># doubly debias
 start = Sys.time()
-test_stat[[3]] = test_stat_doubly(Y = data$Y, X = data$X, centralize = F)$statistics
+test_stat[[3]] = test_stat_doubly(Y = data$Y, X = data$X)$statistics
 end = Sys.time()
 end - start</code></pre>
-<pre><code>## Time difference of 10.55752 mins</code></pre>
+<pre><code>## Time difference of 10.61946 mins</code></pre>
 <pre class="r"><code># standard debias
 start = Sys.time()
-test_stat[[4]] = test_stat_standard(Y = data$Y, X = data$X, centralize = F)$statistics
+test_stat[[4]] = test_stat_standard(Y = data$Y, X = data$X)$statistics
 end = Sys.time()
 end - start</code></pre>
-<pre><code>## Time difference of 1.631044 mins</code></pre>
+<pre><code>## Time difference of 1.631747 mins</code></pre>
 <pre class="r"><code>names(test_stat) = c(&#39;decorrelate_debias-T&#39;, &#39;decorrelate_debias-dc&#39;, &#39;doubly_debias&#39;, &#39;standard_debias&#39;)</code></pre>
 </div>
 <div id="large-scale-inference" class="section level2">
@@ -1707,23 +1712,23 @@ end - start</code></pre>
 inference.</p>
 <pre class="r"><code>sapply(test_stat, multiple_testing, signal = data$signal, alpha = 0.1)</code></pre>
 <pre><code>##                  decorrelate_debias-T decorrelate_debias-dc doubly_debias
-## fdp              0                    0.04166667            0.16         
-## power            0.7333333            0.7666667             0.7          
+## fdp              0.08333333           0                     0.1818182    
+## power            0.7333333            0.8333333             0.6          
 ## alpha            0.1                  0.1                   0.1          
-## threshold        3.000674             2.969739              2.969739     
-## num_discovery    22                   24                    25           
-## index_discovery  integer,22           integer,24            integer,25   
-## num_Tdiscovery   22                   23                    21           
-## index_Tdiscovery integer,22           integer,23            integer,21   
+## threshold        2.969739             2.969739              3.000674     
+## num_discovery    24                   25                    22           
+## index_discovery  integer,24           integer,25            integer,22   
+## num_Tdiscovery   22                   25                    18           
+## index_Tdiscovery integer,22           integer,25            integer,18   
 ##                  standard_debias
-## fdp              0.5942029      
-## power            0.9333333      
+## fdp              0.4            
+## power            0.8            
 ## alpha            0.1            
-## threshold        2.629456       
-## num_discovery    69             
-## index_discovery  integer,69     
-## num_Tdiscovery   28             
-## index_Tdiscovery integer,28</code></pre>
+## threshold        2.815065       
+## num_discovery    40             
+## index_discovery  integer,40     
+## num_Tdiscovery   24             
+## index_Tdiscovery integer,24</code></pre>
 </div>
 
 
