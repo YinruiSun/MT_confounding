@@ -195,6 +195,8 @@ nodewise_lasso = function(X, nlambda = 100)
 
         # IC
         eig_min = RSpectra::eigs_sym(as(Omega, "matrix"), k = 1, which = "SA", opts = list(retvec = FALSE))$values
+        if (length(eig_min) == 0) eig_min = -Inf # algorithm may not be converged
+
         if (eig_min <= 0)
         {
             next
