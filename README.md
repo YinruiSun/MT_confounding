@@ -2,6 +2,10 @@
 
 Codes for **A Decorrelating and Debiasing Approach to Simultaneous Inference for High-Dimensional Confounded Models**.
 
-Functions to implement the methods are provided in the file `functions.r`.
+The file `functions.r` includes the codes to generate synthetic data and implement the methods.
 
-File `demo.html` includes the demo codes to utilize the functions.
+The file `demo.html` includes the demo codes to utilize the functions.
+
+The folder `simulation` includes the codes to produce the numerical results in simulations.
+
+The folder `real data` includes the codes to analyze the HIV-1 datasets, as well as the raw data, preprocessed data and relevant output results.
