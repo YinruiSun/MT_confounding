@@ -1,0 +1,34 @@
+10	F R
+11	I
+20	I T V
+23	I
+24	I
+30	N
+32	I
+33	F
+34	Q
+35	G
+43	T
+46	I L V
+47	A V
+48	M V
+50	L V
+53	L Y
+54	A L M S T V
+55	R
+58	E
+66	F
+67	F
+71	I
+73	A C S T
+74	A P S
+76	V
+79	A
+82	A F S T
+84	A C V
+85	V
+88	D S T
+89	V
+90	M
+92	R
+95	F
