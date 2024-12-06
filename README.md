@@ -1,6 +1,8 @@
 # MT_confounding
 
-Codes for **A Decorrelating and Debiasing Approach to Simultaneous Inference for High-Dimensional Confounded Models**.
+Codes for article:
+
+**Sun, Y., Ma, L., & Xia, Y. (2024). A Decorrelating and Debiasing Approach to Simultaneous Inference for High-Dimensional Confounded Models. _Journal of the American Statistical Association_, 119(548), 2857–2868.**
 
 The file `functions.r` includes the codes to generate synthetic data and implement the methods.
 
